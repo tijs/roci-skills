@@ -61,6 +61,7 @@ Reference scripts as `scripts/name.sh` for the agent to execute.
 | `backup-state` | Create state directory backup | Yes |
 | `deploy` | Deploy and restart services | No |
 | `check-logs` | View service logs | No |
+| `skill-creator` | Guide for creating effective skills | No (has references) |
 
 ## Usage
 

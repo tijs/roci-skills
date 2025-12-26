@@ -58,7 +58,6 @@ Reference scripts as `scripts/name.sh` for the agent to execute.
 | `server-version` | Check VPS system info and versions | Yes |
 | `uptime` | Check server uptime and resources | Yes |
 | `service-status` | Check Roci service status | Yes |
-| `backup-state` | Create state directory backup | Yes |
 | `deploy` | Deploy and restart services | No |
 | `check-logs` | View service logs | No |
 | `skill-creator` | Guide for creating effective skills | No (has references) |

@@ -90,7 +90,6 @@ This creates the directory, writes SKILL.md and scripts, and commits to git.
 | server-version | System version info | check.sh |
 | uptime | Server health/resources | check.sh |
 | service-status | Roci service status | status.sh |
-| backup-state | Backup state directory | backup.sh |
 | deploy | Deploy services | (instructions only) |
 | check-logs | View service logs | (instructions only) |
 

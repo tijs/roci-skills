@@ -12,6 +12,7 @@ bash /home/tijs/roci/skills/service-status/scripts/status.sh
 ```
 
 The script checks:
+
 - roci-memory service
 - roci-agent service
 - roci-matrix service

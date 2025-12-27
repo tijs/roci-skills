@@ -8,6 +8,7 @@ description: Create a GitHub issue in the roci-agent repository. Use when you id
 Use this skill to file issues for roci-agent improvements.
 
 ## Parameters
+
 - **title**: Issue title (required)
 - **body**: Issue description (required)
 - **labels**: Comma-separated labels (optional, e.g., "enhancement,bug")
@@ -22,6 +23,7 @@ Use this skill to file issues for roci-agent improvements.
 2. The script will create the issue and return the URL.
 
 ## Tips
+
 - Be specific about what needs to change
 - Include file paths if known
 - Mention @claude in the body to have Claude Code create a PR

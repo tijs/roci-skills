@@ -12,6 +12,7 @@ bash /home/tijs/roci/skills/uptime/scripts/check.sh
 ```
 
 The script outputs:
+
 - Server uptime and load averages
 - Memory usage
 - Disk usage on root partition

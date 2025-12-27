@@ -16,10 +16,11 @@ Skills use a loading system to manage context efficiently:
 # PDF Processing
 
 ## Quick start
-Extract text with pdfplumber:
-[code example]
+
+Extract text with pdfplumber: [code example]
 
 ## Advanced features
+
 - **Form filling**: See [references/forms.md](references/forms.md)
 - **API reference**: See [references/api.md](references/api.md)
 ```
@@ -45,30 +46,35 @@ When asked about sales, only read sales.md.
 
 ```markdown
 # Good
-Run the backup script.
-Check the service status.
+
+Run the backup script. Check the service status.
 
 # Bad
-You should run the backup script.
-The backup script can be run.
+
+You should run the backup script. The backup script can be run.
 ```
 
 ### Be Specific in Descriptions
 
 ```markdown
 # Good
-description: Check VPS system versions including Node.js, Python, and kernel. Use when asked about server specs, versions, or system health.
+
+description: Check VPS system versions including Node.js, Python, and kernel.
+Use when asked about server specs, versions, or system health.
 
 # Bad
+
 description: Check server stuff.
 ```
 
 ### Include "When to Use" in Description
 
-The description is the ONLY thing visible before the skill loads. Include triggers:
+The description is the ONLY thing visible before the skill loads. Include
+triggers:
 
 ```markdown
-description: Create timestamped backups of the state directory. Use when asked to backup memory, before making risky changes, or for regular state snapshots.
+description: Create timestamped backups of the state directory. Use when asked
+to backup memory, before making risky changes, or for regular state snapshots.
 ```
 
 ## Script Guidelines
@@ -76,6 +82,7 @@ description: Create timestamped backups of the state directory. Use when asked t
 ### When to Create Scripts
 
 Create scripts when:
+
 - Same code is rewritten repeatedly
 - Deterministic reliability is needed
 - Complex command sequences must be preserved
@@ -102,6 +109,7 @@ echo "=== Complete ==="
 ### Test Before Including
 
 Always run scripts manually before adding to a skill:
+
 ```bash
 chmod +x scripts/check.sh
 ./scripts/check.sh
@@ -122,33 +130,37 @@ The skill should only contain what's needed for the agent to do the job.
 
 ```markdown
 # Bad - unnecessary explanation
-This skill is designed to help you check the server version.
-When you use this skill, it will gather information about...
+
+This skill is designed to help you check the server version. When you use this
+skill, it will gather information about...
 
 # Good - direct instructions
-Run the check script:
-\`\`\`bash
-bash scripts/check.sh
-\`\`\`
+
+Run the check script: \`\`\`bash bash scripts/check.sh \`\`\`
 ```
 
 ### Missing Triggers in Description
 
 ```markdown
 # Bad - when would this be used?
+
 description: Handles server operations
 
 # Good - clear triggers
-description: Check server uptime and resource usage. Use when asked about server health, memory usage, disk space, or how long the server has been running.
+
+description: Check server uptime and resource usage. Use when asked about server
+health, memory usage, disk space, or how long the server has been running.
 ```
 
 ### Hardcoded Paths
 
 ```markdown
 # Bad - might break
+
 bash check.sh
 
 # Good - absolute path
+
 bash /home/tijs/roci/skills/server-version/scripts/check.sh
 ```
 

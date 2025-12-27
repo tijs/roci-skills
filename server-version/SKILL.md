@@ -12,6 +12,7 @@ bash /home/tijs/roci/skills/server-version/scripts/check.sh
 ```
 
 The script outputs:
+
 - Kernel version
 - Node.js version
 - Python version

@@ -4,11 +4,13 @@ This file provides guidance to Claude Code when working with this repository.
 
 ## Repository Overview
 
-This is the skills repository for Roci, an AI productivity agent. Skills follow the **Agent Skills open standard** ([agentskills.io](https://agentskills.io)).
+This is the skills repository for Roci, an AI productivity agent. Skills follow
+the **Agent Skills open standard** ([agentskills.io](https://agentskills.io)).
 
 ## What are Skills?
 
-Skills are directories containing instructions and optional scripts that teach the agent how to perform specific tasks. They are:
+Skills are directories containing instructions and optional scripts that teach
+the agent how to perform specific tasks. They are:
 
 - **Higher-level** than tools (compose multiple tools)
 - **Loaded on demand** (not always in context)
@@ -57,7 +59,8 @@ Instructions the agent follows when this skill is invoked.
 4. Agent follows instructions, executing scripts via Bash as needed
 5. Agent reports results to user
 
-**Key insight**: Skills don't auto-execute. The agent reads instructions and decides how to proceed, which may include running scripts in `scripts/`.
+**Key insight**: Skills don't auto-execute. The agent reads instructions and
+decides how to proceed, which may include running scripts in `scripts/`.
 
 ## Creating Skills
 
@@ -70,8 +73,8 @@ create_skill({
   name: "new-skill",
   description: "Does X. Use when Y.",
   instructions: "# Steps\n1. First...\n2. Then...",
-  scripts: [{ name: "run.sh", content: "#!/bin/bash\n..." }]
-})
+  scripts: [{ name: "run.sh", content: "#!/bin/bash\n..." }],
+});
 ```
 
 This creates the directory, writes SKILL.md and scripts, and commits to git.
@@ -85,19 +88,22 @@ This creates the directory, writes SKILL.md and scripts, and commits to git.
 
 ## Available Skills
 
-| Skill | Purpose | Scripts |
-|-------|---------|---------|
-| server-version | System version info | check.sh |
-| uptime | Server health/resources | check.sh |
-| service-status | Roci service status | status.sh |
-| deploy | Deploy services | (instructions only) |
-| check-logs | View service logs | (instructions only) |
+| Skill          | Purpose                 | Scripts             |
+| -------------- | ----------------------- | ------------------- |
+| server-version | System version info     | check.sh            |
+| uptime         | Server health/resources | check.sh            |
+| service-status | Roci service status     | status.sh           |
+| deploy         | Deploy services         | (instructions only) |
+| check-logs     | View service logs       | (instructions only) |
 
 ## Git Workflow
 
-This repo has a deploy key on the VPS with write access. When the agent creates or updates skills via `create_skill`, changes are automatically committed and pushed.
+This repo has a deploy key on the VPS with write access. When the agent creates
+or updates skills via `create_skill`, changes are automatically committed and
+pushed.
 
 To pull updates on VPS:
+
 ```bash
 ssh roci 'cd ~/roci/skills && git pull'
 ```

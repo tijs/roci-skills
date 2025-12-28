@@ -1,6 +1,6 @@
 # Manage State Files
 
-Guidance for working with Roci's state files (inbox, today, commitments, backlog).
+Guidance for working with Roci's state files (inbox, today, commitments, patterns).
 
 ## State Directory
 
@@ -48,13 +48,13 @@ cat >> /home/tijs/roci/state/commitments.md << 'EOF'
 EOF
 ```
 
-### backlog.md
-**Purpose:** Tasks for autonomous processing (no deadline)
-**When to write:** During watch rotation, move non-urgent items from inbox
+### patterns.md
+**Purpose:** Recurring patterns and task backlog (no deadline)
+**When to write:** During watch rotation, move non-urgent items or patterns from inbox
 **Format:** Categorized if helpful
 **Example:**
 ```bash
-cat >> /home/tijs/roci/state/backlog.md << 'EOF'
+cat >> /home/tijs/roci/state/patterns.md << 'EOF'
 ## Roci Features
 - Implement calendar sync for external calendars
 - Add support for recurring tasks
@@ -104,7 +104,7 @@ EOF
 During watch rotation, process inbox.md:
 
 1. Read inbox: `cat /home/tijs/roci/state/inbox.md`
-2. For each item, decide: today / backlog / commitments / delete
+2. For each item, decide: today / patterns / commitments / delete
 3. Move items to the appropriate file
 4. Clear inbox when done
 

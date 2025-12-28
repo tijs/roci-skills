@@ -27,12 +27,12 @@ Operational guidance for Roci's 2-hour autonomous watch rotations.
 **Check-in Focus:**
 - Quick scan of inbox for urgent items
 - Is today progressing as expected?
-- If everything is on track, consider picking **one small task from backlog**
+- If everything is on track, consider picking **one small task from patterns**
 - Check for any time-sensitive deadlines approaching
 
 **Typical actions:**
 - Triage inbox (if any new items)
-- Pick ONE backlog task if: inbox is clear, today.md is under control, no urgent deadlines
+- Pick ONE patterns task if: inbox is clear, today.md is under control, no urgent deadlines
 - Avoid: picking complex tasks, multiple tasks, tasks requiring external coordination
 
 ### Evening (5:00 PM - 10:00 PM)
@@ -45,7 +45,7 @@ Operational guidance for Roci's 2-hour autonomous watch rotations.
 
 **Typical actions:**
 - Review today.md for completion
-- Move incomplete items to tomorrow or backlog
+- Move incomplete items to tomorrow or patterns
 - Capture any new items from the day
 - Brief summary if meaningful events occurred
 
@@ -65,7 +65,7 @@ Operational guidance for Roci's 2-hour autonomous watch rotations.
 **Why calendar first:**
 - Provides temporal context for priorities
 - Helps identify urgent vs important
-- Informs backlog task selection (don't start something if meetings coming up)
+- Informs patterns task selection (don't start something if meetings coming up)
 
 ## Inbox Triage
 
@@ -73,7 +73,7 @@ Operational guidance for Roci's 2-hour autonomous watch rotations.
 
 For each item in inbox, decide:
 - **→ today.md**: Time-sensitive, urgent, or needed today
-- **→ backlog.md**: Can wait, no specific deadline, autonomous work
+- **→ patterns.md**: Can wait, recurring patterns, or autonomous work
 - **→ commitments.md**: Has a specific date/deadline
 - **→ Delete**: No longer relevant, already handled, or duplicated
 
@@ -90,7 +90,7 @@ run_skill("manage-state")
 - ✅ Deadline within 24 hours that might be forgotten
 - ✅ A commitment was discovered that needs attention NOW
 - ✅ Something urgent in inbox requiring immediate action
-- ✅ You completed a backlog task worth mentioning
+- ✅ You completed a patterns task worth mentioning
 - ✅ Calendar conflict or important meeting in next few hours
 - ✅ Something broke or needs fixing
 
@@ -104,9 +104,9 @@ run_skill("manage-state")
 
 **Philosophy:** Only speak when you have signal. Most ticks should be silent.
 
-## Backlog Processing (Midday Only)
+## Patterns Processing (Midday Only)
 
-**When to pick a backlog task:**
+**When to pick a patterns task:**
 - ✅ Inbox is empty
 - ✅ today.md items are under control or completed
 - ✅ No urgent deadlines in next 2-4 hours
@@ -125,8 +125,8 @@ run_skill("manage-state")
 - ❌ Tasks that might take multiple hours
 - ❌ Anything that could create interruptions
 
-**After completing a backlog task:**
-- Remove from backlog.md
+**After completing a patterns task:**
+- Remove from patterns.md
 - Consider mentioning if it's meaningful (but don't over-report)
 
 ## Output Format
@@ -144,7 +144,7 @@ Respond with exactly: `[NO_MESSAGE]`
 
 **Example good messages:**
 - "Deadline reminder: Q1 planning deck due tomorrow (Jan 15)"
-- "Completed backlog task: refactored calendar sync, now 40% faster"
+- "Completed patterns task: refactored calendar sync, now 40% faster"
 - "Urgent: Amsterdam flight booking expires tonight"
 
 **Example bad messages (use [NO_MESSAGE] instead):**

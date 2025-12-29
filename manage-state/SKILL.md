@@ -1,3 +1,8 @@
+---
+name: manage-state
+description: Comprehensive guide to Roci's state file system. Explains core task files (auto-loaded) vs reference files (on-demand). Use when user asks about state, mentions tasks, or references tracked topics like projects, books, family, etc.
+---
+
 # Manage State Files
 
 Guidance for working with Roci's state files (inbox, today, commitments,

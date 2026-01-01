@@ -1,6 +1,7 @@
 ---
 name: response-reflection
 description: Guidance for post-response reflection on user messages. Use when deciding whether to update state files (inbox, today, patterns, commitments) after responding to user. Analyzes conversations to identify tasks, patterns, and insights worth remembering.
+model: gpt-5.2
 ---
 
 # Response Reflection
@@ -209,4 +210,4 @@ If no updates needed:
 
 ## Model Recommendation
 
-Use Sonnet for reflection (better judgment, pattern recognition) rather than Haiku (may miss subtle patterns).
+Use GPT-5.2 for reflection (modern architecture, excellent judgment, cost-effective) rather than older models.

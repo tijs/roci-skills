@@ -11,6 +11,7 @@ Post-response reflection for proactive state file updates after user messages.
 ## Purpose
 
 After responding to the user, reflect on the conversation to identify:
+
 - Tasks or reminders that should be captured
 - Patterns or preferences worth noting
 - Commitments with specific dates
@@ -22,6 +23,7 @@ After responding to the user, reflect on the conversation to identify:
 ### inbox.md - Task Capture
 
 **Update if:**
+
 - User mentions a task, even casually ("I should...")
 - User requests a reminder
 - Follow-up action is needed
@@ -29,13 +31,16 @@ After responding to the user, reflect on the conversation to identify:
 - User wants to try something later
 
 **Examples:**
+
 - "Remind me to call mom" → Add to inbox
 - "I should clean up that code" → Add to inbox
 - "Need to review the PR" → Add to inbox
 
 **Format:**
+
 ```markdown
 ## Tasks
+
 - [ ] Call mom (mentioned in conversation)
 - [ ] Clean up authentication code
 - [ ] Review PR #123
@@ -44,19 +49,23 @@ After responding to the user, reflect on the conversation to identify:
 ### today.md - Time-Sensitive Items
 
 **Update if:**
+
 - User mentions something urgent for today
 - Task explicitly said to be "today"
 - Time-sensitive deadline approaching soon
 - User mentions "this morning" or "this afternoon"
 
 **Examples:**
+
 - "I need to finish this today" → Add to today
 - "Meeting at 2pm" → Add to today
 - "Report due this afternoon" → Add to today
 
 **Format:**
+
 ```markdown
 ## Time-Sensitive
+
 - [ ] Finish quarterly report (due 2pm)
 - [ ] Review slides before 2pm meeting
 ```
@@ -64,19 +73,23 @@ After responding to the user, reflect on the conversation to identify:
 ### commitments.md - Dated Deadlines
 
 **Update if:**
+
 - User mentions a specific date ("by Friday", "January 15th")
 - Calendar event with a deadline
 - Commitment with time constraints
 - Recurring obligation starting on a date
 
 **Examples:**
+
 - "Report due Friday" → Add with date
 - "Launch on Jan 15th" → Add with date
 - "Meeting every Tuesday" → Add pattern with start date
 
 **Format:**
+
 ```markdown
 ## Deadlines
+
 - [ ] Quarterly report - Due: 2025-01-03
 - [ ] Product launch - Due: 2025-01-15
 - [ ] Weekly team sync - Every Tuesday starting 2025-01-07
@@ -85,6 +98,7 @@ After responding to the user, reflect on the conversation to identify:
 ### patterns.md - Recurring Patterns & Backlog
 
 **Update if:**
+
 - User mentions a recurring preference ("I always...", "I usually...")
 - Pattern in how user works or thinks
 - Feature idea or improvement suggestion
@@ -92,18 +106,22 @@ After responding to the user, reflect on the conversation to identify:
 - User mentions forgetting something repeatedly
 
 **Examples:**
+
 - "I always forget to check email" → Add pattern
 - "I usually work on weekends" → Add pattern
 - "Would be nice to have dark mode" → Add to backlog
 - "Need to refactor this eventually" → Add to backlog
 
 **Format:**
+
 ```markdown
 ## Patterns
+
 - Prefers async communication over meetings
 - Forgets to check email in mornings → Consider morning reminder
 
 ## Backlog
+
 - [ ] Add dark mode to dashboard
 - [ ] Refactor authentication system
 - [ ] Research better calendar integration
@@ -112,6 +130,7 @@ After responding to the user, reflect on the conversation to identify:
 ## When NOT to Update (Silence Criteria)
 
 **Skip reflection if:**
+
 - Casual conversation with no actionable items
 - Informational query answered completely
 - User just saying thanks or acknowledging
@@ -119,6 +138,7 @@ After responding to the user, reflect on the conversation to identify:
 - Simple questions with no follow-up needed
 
 **Examples of skippable conversations:**
+
 - "What's the weather?"
 - "Thanks!"
 - "How do I use git?"
@@ -129,11 +149,13 @@ After responding to the user, reflect on the conversation to identify:
 ## Integration with manage-state Skill
 
 For detailed file operations, use the `manage-state` skill:
+
 - Reading current state files
 - Appending to sections
 - Bash commands for updates
 
 **Example workflow:**
+
 1. Identify what needs updating (this skill)
 2. Load `manage-state` for file operations (if needed)
 3. Execute updates via Write or Bash tools
@@ -141,11 +163,13 @@ For detailed file operations, use the `manage-state` skill:
 ## Cross-Referencing
 
 **Check for connections to:**
+
 - Existing projects (read `projects.md`)
 - People mentioned (check `people/*.md`)
 - Research topics (check `research/`)
 
-If the conversation relates to existing context, note the connection in the state file update.
+If the conversation relates to existing context, note the connection in the
+state file update.
 
 ## Example Reflection Decision Tree
 
@@ -193,10 +217,13 @@ Action:
 ## Output Format
 
 If updates made:
+
 - Use Write tool to update state files
-- Log brief summary: "Updated inbox.md with 2 tasks, patterns.md with preference"
+- Log brief summary: "Updated inbox.md with 2 tasks, patterns.md with
+  preference"
 
 If no updates needed:
+
 - Output: `[SKIP_REFLECTION]`
 - No tools called, save tokens
 
@@ -210,4 +237,5 @@ If no updates needed:
 
 ## Model Recommendation
 
-Use GPT-5.2 for reflection (modern architecture, excellent judgment, cost-effective) rather than older models.
+Use GPT-5.2 for reflection (modern architecture, excellent judgment,
+cost-effective) rather than older models.

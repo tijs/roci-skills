@@ -1,19 +1,20 @@
 # Roci Service Architecture
 
-Reference documentation for understanding Roci's multi-service architecture, dependencies, and communication topology.
+Reference documentation for understanding Roci's multi-service architecture,
+dependencies, and communication topology.
 
 ## Service Overview
 
 Roci consists of 6 systemd services working together:
 
-| Service | Technology | Purpose | Port/Socket |
-|---------|-----------|---------|-------------|
-| **roci-litellm** | Python (LiteLLM) | LLM provider backend | HTTP :8000 |
-| **roci-llm** | Deno/TypeScript | LLM gateway proxy | HTTP :3000 |
-| **roci-memory** | Deno/TypeScript | Memory management, Letta blocks, state files | IPC socket (server) |
-| **roci-rag** | Deno/TypeScript | Document indexing, semantic search | IPC socket (server) |
-| **roci-agent** | Deno/TypeScript | Agent harness, tool execution | IPC socket (server) |
-| **roci-matrix** | Deno/TypeScript | Matrix protocol, E2E encryption | IPC socket (server) |
+| Service          | Technology       | Purpose                                      | Port/Socket         |
+| ---------------- | ---------------- | -------------------------------------------- | ------------------- |
+| **roci-litellm** | Python (LiteLLM) | LLM provider backend                         | HTTP :8000          |
+| **roci-llm**     | Deno/TypeScript  | LLM gateway proxy                            | HTTP :3000          |
+| **roci-memory**  | Deno/TypeScript  | Memory management, Letta blocks, state files | IPC socket (server) |
+| **roci-rag**     | Deno/TypeScript  | Document indexing, semantic search           | IPC socket (server) |
+| **roci-agent**   | Deno/TypeScript  | Agent harness, tool execution                | IPC socket (server) |
+| **roci-matrix**  | Deno/TypeScript  | Matrix protocol, E2E encryption              | IPC socket (server) |
 
 ## Dependency Graph
 
@@ -31,6 +32,7 @@ roci-matrix.service (requires agent)
 ```
 
 **Key points:**
+
 - **LLM services:** litellm must start before llm (HTTP dependency)
 - **IPC services:** memory must start before agent/rag (socket dependency)
 - **Matrix:** Requires agent to be running (IPC dependency)
@@ -74,6 +76,7 @@ When the system boots or services are restarted:
 ```
 
 **Socket paths:**
+
 - `/var/run/roci/memory.sock` - Memory service (server)
 - `/var/run/roci/agent.sock` - Agent service (server)
 - `/var/run/roci/matrix.sock` - Matrix service (server)
@@ -107,6 +110,7 @@ When the system boots or services are restarted:
 When restarting services manually, follow dependency order:
 
 ### Stop (reverse dependency order):
+
 ```bash
 sudo systemctl stop roci-matrix
 sudo systemctl stop roci-agent
@@ -117,6 +121,7 @@ sudo systemctl stop roci-litellm
 ```
 
 ### Start (dependency order):
+
 ```bash
 sudo systemctl start roci-litellm
 sudo systemctl start roci-llm
@@ -127,6 +132,7 @@ sudo systemctl start roci-matrix
 ```
 
 **Or use the script:**
+
 ```bash
 bash /home/tijs/roci/scripts/restart.sh all
 ```
@@ -136,6 +142,7 @@ bash /home/tijs/roci/scripts/restart.sh all
 Two systemd timers provide autonomous operation:
 
 ### roci-watch.timer
+
 - **Schedule:** Every 2 hours (00:00, 02:00, 04:00, etc.)
 - **Persistent:** Yes (catches up if missed)
 - **Triggers:** roci-watch.service (oneshot)
@@ -143,11 +150,13 @@ Two systemd timers provide autonomous operation:
 - **Message:** Sends `{"type":"watch_tick","timestamp":"..."}` to agent.sock
 
 ### roci-reflect-daily.timer
+
 - **Schedule:** Daily at 23:00 (11 PM CET)
 - **Persistent:** Yes (catches up if missed)
 - **Triggers:** roci-reflect-daily.service (oneshot)
 - **Script:** `/home/tijs/roci/scripts/reflect-tick.sh`
-- **Message:** Sends `{"type":"daily_reflection","timestamp":"..."}` to agent.sock
+- **Message:** Sends `{"type":"daily_reflection","timestamp":"..."}` to
+  agent.sock
 
 ## Resource Limits
 
@@ -165,6 +174,7 @@ All services have systemd resource limits:
 ## Security Configuration
 
 All services run with:
+
 - **User:** tijs (non-root)
 - **PrivateTmp:** yes (isolated /tmp)
 - **NoNewPrivileges:** yes (cannot escalate privileges)
@@ -173,16 +183,19 @@ All services run with:
 ## Common Issues
 
 ### Service won't start
+
 1. Check dependencies are running first (memory before agent, etc.)
 2. Check logs: `sudo journalctl -u roci-SERVICE -n 50`
 3. Verify socket files exist in `/var/run/roci/`
 
 ### IPC timeouts
+
 1. Verify target service is running
 2. Check socket file exists and has correct permissions
 3. Test with `bash /home/tijs/roci/skills/troubleshoot/scripts/test-ipc.sh`
 
 ### Timer not firing
+
 1. Check timer is enabled: `systemctl list-timers roci-watch.timer`
 2. Verify agent socket exists for timer to send messages
 3. Check timer service logs: `sudo journalctl -u roci-watch.service`

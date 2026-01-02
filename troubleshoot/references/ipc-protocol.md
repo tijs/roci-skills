@@ -4,7 +4,8 @@ Reference documentation for Roci's Unix socket IPC protocol and manual testing.
 
 ## Protocol Overview
 
-All Roci services use Unix domain sockets with a **4-byte big-endian length prefix** protocol:
+All Roci services use Unix domain sockets with a **4-byte big-endian length
+prefix** protocol:
 
 ```
 [4 bytes: message length][N bytes: JSON message]
@@ -16,16 +17,17 @@ All Roci services use Unix domain sockets with a **4-byte big-endian length pref
 
 ## Socket Locations
 
-| Service | Socket Path | Role |
-|---------|-------------|------|
-| Memory | `/var/run/roci/memory.sock` | Server |
-| Agent | `/var/run/roci/agent.sock` | Server + Client (to memory, matrix) |
-| Matrix | `/var/run/roci/matrix.sock` | Server |
-| RAG | `/var/run/roci/rag.sock` | Server |
+| Service | Socket Path                 | Role                                |
+| ------- | --------------------------- | ----------------------------------- |
+| Memory  | `/var/run/roci/memory.sock` | Server                              |
+| Agent   | `/var/run/roci/agent.sock`  | Server + Client (to memory, matrix) |
+| Matrix  | `/var/run/roci/matrix.sock` | Server                              |
+| RAG     | `/var/run/roci/rag.sock`    | Server                              |
 
 ## Manual Testing
 
-**⚠️ Important:** Standard `nc` (netcat) doesn't handle the 4-byte length prefix correctly. Use the provided test scripts or Python for manual testing.
+**⚠️ Important:** Standard `nc` (netcat) doesn't handle the 4-byte length prefix
+correctly. Use the provided test scripts or Python for manual testing.
 
 ### Using test-ipc.sh (Recommended)
 
@@ -80,6 +82,7 @@ sock.close()
 Retrieve complete memory context (Letta blocks + state files + journal).
 
 **Request:**
+
 ```json
 {
   "action": "getMemory"
@@ -87,6 +90,7 @@ Retrieve complete memory context (Letta blocks + state files + journal).
 ```
 
 **Response:**
+
 ```json
 {
   "letta": {
@@ -111,6 +115,7 @@ Retrieve complete memory context (Letta blocks + state files + journal).
 Update a specific Letta memory block.
 
 **Request:**
+
 ```json
 {
   "action": "updateBlock",
@@ -120,6 +125,7 @@ Update a specific Letta memory block.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true
@@ -135,6 +141,7 @@ Update a specific Letta memory block.
 Log an entry to journal.jsonl.
 
 **Request:**
+
 ```json
 {
   "action": "logJournal",
@@ -145,6 +152,7 @@ Log an entry to journal.jsonl.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -166,6 +174,7 @@ Log an entry to journal.jsonl.
 Sync ATProto records to cache (for calendar integration).
 
 **Request:**
+
 ```json
 {
   "action": "syncATProtoRecords",
@@ -174,6 +183,7 @@ Sync ATProto records to cache (for calendar integration).
 ```
 
 **Response:**
+
 ```json
 {
   "synced": 42,
@@ -192,6 +202,7 @@ Sync ATProto records to cache (for calendar integration).
 Semantic search across indexed documents.
 
 **Request:**
+
 ```json
 {
   "action": "search",
@@ -202,6 +213,7 @@ Semantic search across indexed documents.
 ```
 
 **Response:**
+
 ```json
 {
   "results": [
@@ -209,7 +221,7 @@ Semantic search across indexed documents.
       "text": "chunk text...",
       "score": 0.92,
       "sourcePath": "/path/to/document.pdf",
-      "metadata": {"page": 1},
+      "metadata": { "page": 1 },
       "project": "work"
     }
   ]
@@ -223,6 +235,7 @@ Semantic search across indexed documents.
 Ingest a document for indexing.
 
 **Request:**
+
 ```json
 {
   "action": "ingest",
@@ -233,6 +246,7 @@ Ingest a document for indexing.
 ```
 
 **Response:**
+
 ```json
 {
   "chunksCreated": 45,
@@ -249,6 +263,7 @@ Ingest a document for indexing.
 List available project namespaces.
 
 **Request:**
+
 ```json
 {
   "action": "listProjects"
@@ -256,6 +271,7 @@ List available project namespaces.
 ```
 
 **Response:**
+
 ```json
 {
   "projects": ["work", "personal", "research"]
@@ -273,6 +289,7 @@ List available project namespaces.
 Trigger autonomous watch rotation (sent by systemd timer).
 
 **Request:**
+
 ```json
 {
   "type": "watch_tick",
@@ -281,6 +298,7 @@ Trigger autonomous watch rotation (sent by systemd timer).
 ```
 
 **Response:**
+
 ```json
 {
   "type": "agent_response",
@@ -295,6 +313,7 @@ Trigger autonomous watch rotation (sent by systemd timer).
 Trigger daily reflection (sent by systemd timer).
 
 **Request:**
+
 ```json
 {
   "type": "daily_reflection",
@@ -303,6 +322,7 @@ Trigger daily reflection (sent by systemd timer).
 ```
 
 **Response:**
+
 ```json
 {
   "type": "agent_response",
@@ -317,6 +337,7 @@ Trigger daily reflection (sent by systemd timer).
 User message from Matrix (sent by roci-matrix).
 
 **Request:**
+
 ```json
 {
   "type": "user_message",
@@ -329,6 +350,7 @@ User message from Matrix (sent by roci-matrix).
 ```
 
 **Response:**
+
 ```json
 {
   "type": "agent_response",
@@ -350,6 +372,7 @@ User message from Matrix (sent by roci-matrix).
 Proactive message from agent (e.g., watch rotation update).
 
 **Request:**
+
 ```json
 {
   "type": "proactive_message",
@@ -362,6 +385,7 @@ Proactive message from agent (e.g., watch rotation update).
 ```
 
 **Response:**
+
 ```json
 {
   "type": "success",
@@ -384,6 +408,7 @@ All services may return error responses:
 ```
 
 **Common error codes:**
+
 - `INVALID_MESSAGE` - Malformed JSON or missing fields
 - `ACTION_NOT_FOUND` - Unknown action type
 - `TIMEOUT` - Operation timed out
@@ -394,16 +419,19 @@ All services may return error responses:
 ## Testing Scripts
 
 ### Test all IPC connections
+
 ```bash
 bash /home/tijs/roci/skills/troubleshoot/scripts/test-ipc.sh
 ```
 
 ### Manually trigger watch tick
+
 ```bash
 bash /home/tijs/roci/scripts/watch-tick.sh
 ```
 
 ### Manually trigger daily reflection
+
 ```bash
 bash /home/tijs/roci/skills/troubleshoot/scripts/trigger-reflect.sh
 ```
@@ -413,15 +441,18 @@ bash /home/tijs/roci/skills/troubleshoot/scripts/trigger-reflect.sh
 ## Protocol Design Rationale
 
 **Why 4-byte length prefix?**
+
 - Allows variable-length messages without delimiters
 - Prevents message framing issues (embedded newlines, etc.)
 - Standard practice for length-prefixed protocols
 
 **Why big-endian?**
+
 - Network byte order convention
 - Consistent across different architectures
 
 **Why SOCK_STREAM?**
+
 - Reliable, ordered delivery
 - Connection-oriented (know when client disconnects)
 - Built-in flow control
@@ -431,28 +462,34 @@ bash /home/tijs/roci/skills/troubleshoot/scripts/trigger-reflect.sh
 ## Debugging Tips
 
 ### Check if socket exists
+
 ```bash
 ssh roci 'test -S /var/run/roci/memory.sock && echo "Exists"'
 ```
 
 ### Check socket permissions
+
 ```bash
 ssh roci 'ls -la /var/run/roci/memory.sock'
 ```
+
 Should show `srwxr-xr-x` owned by `tijs`.
 
 ### Check which process is listening
+
 ```bash
 ssh roci 'lsof /var/run/roci/memory.sock'
 ```
 
 ### Monitor socket traffic (requires socat)
+
 ```bash
 # Proxy socket to see traffic
 ssh roci 'socat -v UNIX-LISTEN:/tmp/test.sock,fork UNIX-CONNECT:/var/run/roci/memory.sock'
 ```
 
 ### Test with timeout
+
 ```python
 sock.settimeout(5)  # 5 second timeout
 try:

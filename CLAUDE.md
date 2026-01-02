@@ -88,20 +88,20 @@ This creates the directory, writes SKILL.md and scripts, and commits to git.
 
 ## Available Skills
 
-| Skill               | Purpose                          | Scripts             |
-| ------------------- | -------------------------------- | ------------------- |
-| manage-state        | Core task file operations        | (instructions only) |
-| people              | Track relationships              | (instructions only) |
-| research            | Deep research synthesis          | (instructions only) |
-| time-handling       | Date calculations                | age.sh, duration.sh, add-date.sh, day-of-week.sh |
-| watch-tick-behavior | Autonomous check-in logic        | (instructions only) |
-| deploy              | Deploy services                  | (instructions only) |
-| check-logs          | View service logs                | (instructions only) |
-| server-version      | System version info              | check.sh            |
-| service-status      | Roci service status              | status.sh           |
-| uptime              | Server health/resources          | check.sh            |
-| github-issue        | GitHub issue management          | (instructions only) |
-| skill-creator       | Create new skills                | (instructions only) |
+| Skill               | Purpose                   | Scripts                                          |
+| ------------------- | ------------------------- | ------------------------------------------------ |
+| manage-state        | Core task file operations | (instructions only)                              |
+| people              | Track relationships       | (instructions only)                              |
+| research            | Deep research synthesis   | (instructions only)                              |
+| time-handling       | Date calculations         | age.sh, duration.sh, add-date.sh, day-of-week.sh |
+| watch-tick-behavior | Autonomous check-in logic | (instructions only)                              |
+| deploy              | Deploy services           | (instructions only)                              |
+| check-logs          | View service logs         | (instructions only)                              |
+| server-version      | System version info       | check.sh                                         |
+| service-status      | Roci service status       | status.sh                                        |
+| uptime              | Server health/resources   | check.sh                                         |
+| github-issue        | GitHub issue management   | (instructions only)                              |
+| skill-creator       | Create new skills         | (instructions only)                              |
 
 ## Git Workflow
 

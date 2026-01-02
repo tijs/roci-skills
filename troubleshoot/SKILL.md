@@ -51,7 +51,8 @@ If issues found, proceed to the relevant diagnostic path below.
    ssh roci 'sudo journalctl -u roci-SERVICE -n 100 --no-pager'
    ```
 
-3. Verify service dependencies (memory must start before agent/rag, agent before matrix):
+3. Verify service dependencies (memory must start before agent/rag, agent before
+   matrix):
    - If memory is down, start it first
    - If agent is down but memory is up, check memory socket exists
    - If matrix is down but agent is up, check agent socket exists
@@ -74,7 +75,8 @@ If issues found, proceed to the relevant diagnostic path below.
   bash /home/tijs/roci/scripts/restart.sh all
   ```
 
-- If memory service won't start, check STATE_DIR environment variable and verify `/home/tijs/roci/state/` exists
+- If memory service won't start, check STATE_DIR environment variable and verify
+  `/home/tijs/roci/state/` exists
 - If agent service won't start, check LLM_SERVICE_URL points to correct endpoint
 - If systemd files were modified, reload daemon:
   ```bash
@@ -83,7 +85,8 @@ If issues found, proceed to the relevant diagnostic path below.
 
 ### 2. Watch Ticks Not Firing
 
-**Symptoms:** No watch messages at 2-hour intervals, state not updating automatically
+**Symptoms:** No watch messages at 2-hour intervals, state not updating
+automatically
 
 **Diagnosis steps:**
 
@@ -174,7 +177,8 @@ If issues found, proceed to the relevant diagnostic path below.
   bash /home/tijs/roci/scripts/restart.sh all
   ```
 
-- If /var/run/roci/ directory doesn't exist, memory service needs to create it on startup (check memory service status)
+- If /var/run/roci/ directory doesn't exist, memory service needs to create it
+  on startup (check memory service status)
 
 - If permission denied, check socket file permissions and service user
 
@@ -392,27 +396,33 @@ Expected output: Status of roci-llm (port 3000) and roci-litellm (port 8000)
 ## Reference
 
 **Service dependencies:**
+
 - memory → (rag, agent) → matrix
 - litellm → llm
 
 **Socket paths:**
+
 - `/var/run/roci/memory.sock` - Memory service server
 - `/var/run/roci/agent.sock` - Agent service server
 - `/var/run/roci/matrix.sock` - Matrix service server
 - `/var/run/roci/rag.sock` - RAG service server
 
 **HTTP endpoints:**
+
 - `http://localhost:3000` - roci-llm (Deno proxy)
 - `http://localhost:8000` - roci-litellm (Python backend)
 
 **Timer schedules:**
+
 - `roci-watch.timer` - Every 2 hours (00:00, 02:00, 04:00, etc.)
 - `roci-reflect-daily.timer` - Daily at 23:00 (11 PM)
 
 **State directory:**
+
 - `/home/tijs/roci/state/` - Canonical state file location
 
 **For detailed architecture, see:**
+
 - `references/service-architecture.md` - Dependency graph and startup order
 - `references/common-errors.md` - Known error patterns and solutions
 - `references/ipc-protocol.md` - Manual IPC testing examples

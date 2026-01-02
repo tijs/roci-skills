@@ -6,7 +6,9 @@ allowed-tools: bash read write
 
 # Time Handling
 
-This skill provides timezone-aware date calculations for age, duration, date arithmetic, and day-of-week lookups. All operations use the Europe/Amsterdam timezone and ISO 8601 date format (YYYY-MM-DD).
+This skill provides timezone-aware date calculations for age, duration, date
+arithmetic, and day-of-week lookups. All operations use the Europe/Amsterdam
+timezone and ISO 8601 date format (YYYY-MM-DD).
 
 ## Operations
 
@@ -19,10 +21,12 @@ bash /home/tijs/roci/skills/time-handling/scripts/age.sh YYYY-MM-DD [--format=ye
 ```
 
 **Examples:**
+
 - `age.sh 1985-06-15` → "39 years old"
 - `age.sh 1985-06-15 --format=full` → "39 years, 6 months, 13 days"
 
 **When to use:**
+
 - Calculating someone's age from their birthdate in `state/people/*.md`
 - Checking age milestones
 - Age-based context for tasks
@@ -36,11 +40,13 @@ bash /home/tijs/roci/skills/time-handling/scripts/duration.sh DATE1 DATE2 [--for
 ```
 
 **Examples:**
+
 - `duration.sh 2025-01-01 2025-12-31` → "364 days"
 - `duration.sh 2025-01-01 2025-12-31 --format=weeks` → "52 weeks"
 - `duration.sh 2025-01-01 2025-12-31 --format=human` → "11 months, 30 days"
 
 **When to use:**
+
 - Calculating days until a deadline in `state/commitments.md`
 - Time since a project started
 - Duration between any two dates
@@ -54,6 +60,7 @@ bash /home/tijs/roci/skills/time-handling/scripts/add-date.sh DATE AMOUNT UNIT [
 ```
 
 **Examples:**
+
 - `add-date.sh 2025-12-28 7 days` → "2026-01-04"
 - `add-date.sh 2025-12-28 -2 weeks` → "2025-12-14"
 - `add-date.sh 2025-12-28 3 months --format=human` → "Saturday, March 28, 2026"
@@ -61,6 +68,7 @@ bash /home/tijs/roci/skills/time-handling/scripts/add-date.sh DATE AMOUNT UNIT [
 **Units:** `days`, `weeks`, `months` (negative values to subtract)
 
 **When to use:**
+
 - Setting new deadlines (X days from now)
 - Calculating reminder dates
 - Project planning with relative dates
@@ -74,11 +82,13 @@ bash /home/tijs/roci/skills/time-handling/scripts/day-of-week.sh DATE [--format=
 ```
 
 **Examples:**
+
 - `day-of-week.sh 2025-12-28` → "Sunday"
 - `day-of-week.sh 2025-12-28 --format=short` → "Sun"
 - `day-of-week.sh 2025-12-28 --format=full` → "Sunday, December 28, 2025"
 
 **When to use:**
+
 - Context for scheduling ("Next meeting is on a Friday")
 - Understanding deadline timing
 - Calendar context
@@ -116,6 +126,7 @@ bash /home/tijs/roci/skills/time-handling/scripts/day-of-week.sh 2026-01-15
 ## Error Handling
 
 All scripts handle invalid input gracefully:
+
 - Invalid date formats → Error message + exit code 1
 - Future birthdates (age.sh) → Error message + exit code 1
 - Invalid units (add-date.sh) → Error message + exit code 1
@@ -130,4 +141,5 @@ All scripts handle invalid input gracefully:
 
 ## Timezone
 
-All operations use **Europe/Amsterdam** timezone for consistency with the user's location.
+All operations use **Europe/Amsterdam** timezone for consistency with the user's
+location.

@@ -59,20 +59,20 @@ Step-by-step instructions for the agent to follow. Reference scripts as
 
 ## Available Skills
 
-| Skill                 | Description                                         | Has Scripts         |
-| --------------------- | --------------------------------------------------- | ------------------- |
+| Skill                 | Description                                        | Has Scripts         |
+| --------------------- | -------------------------------------------------- | ------------------- |
 | `manage-state`        | Manage core task files (inbox, today, commitments) | No                  |
-| `people`              | Track relationships and interactions                | No                  |
-| `research`            | Deep research synthesis for specific contexts       | No                  |
-| `time-handling`       | Date calculations (age, duration, arithmetic)       | Yes (4 scripts)     |
-| `watch-tick-behavior` | Guide autonomous check-in decision-making           | No                  |
-| `deploy`              | Deploy and restart services                         | No                  |
-| `check-logs`          | View service logs                                   | No                  |
-| `server-version`      | Check VPS system info and versions                  | Yes                 |
-| `service-status`      | Check Roci service status                           | Yes                 |
-| `uptime`              | Check server uptime and resources                   | Yes                 |
-| `github-issue`        | Create and manage GitHub issues                     | No                  |
-| `skill-creator`       | Guide for creating effective skills                 | No (has references) |
+| `people`              | Track relationships and interactions               | No                  |
+| `research`            | Deep research synthesis for specific contexts      | No                  |
+| `time-handling`       | Date calculations (age, duration, arithmetic)      | Yes (4 scripts)     |
+| `watch-tick-behavior` | Guide autonomous check-in decision-making          | No                  |
+| `deploy`              | Deploy and restart services                        | No                  |
+| `check-logs`          | View service logs                                  | No                  |
+| `server-version`      | Check VPS system info and versions                 | Yes                 |
+| `service-status`      | Check Roci service status                          | Yes                 |
+| `uptime`              | Check server uptime and resources                  | Yes                 |
+| `github-issue`        | Create and manage GitHub issues                    | No                  |
+| `skill-creator`       | Guide for creating effective skills                | No (has references) |
 
 ## Usage
 

@@ -9,6 +9,7 @@ Quick reference for diagnosing and fixing common Roci system errors.
 **Cause:** Memory service not running or socket file not created
 
 **Diagnosis:**
+
 ```bash
 # Check memory service status
 ssh roci 'sudo systemctl status roci-memory'
@@ -18,6 +19,7 @@ ssh roci 'ls -la /var/run/roci/memory.sock'
 ```
 
 **Fix:**
+
 ```bash
 # Start memory service
 ssh roci 'sudo systemctl start roci-memory'
@@ -33,6 +35,7 @@ ssh roci 'test -S /var/run/roci/memory.sock && echo "OK"'
 **Cause:** Service running but not responding (hung, deadlock, infinite loop)
 
 **Diagnosis:**
+
 ```bash
 # Check if process is consuming CPU (hung in loop)
 ssh roci 'top -b -n 1 | grep -E "roci-(memory|agent|matrix)"'
@@ -42,6 +45,7 @@ ssh roci 'sudo journalctl -u roci-SERVICE -n 50 --no-pager'
 ```
 
 **Fix:**
+
 ```bash
 # Restart the hung service
 bash /home/tijs/roci/scripts/restart.sh SERVICE
@@ -56,6 +60,7 @@ bash /home/tijs/roci/scripts/restart.sh SERVICE
 **Cause:** Service not running or socket permissions incorrect
 
 **Diagnosis:**
+
 ```bash
 # Check service status
 bash /home/tijs/roci/scripts/status.sh
@@ -68,6 +73,7 @@ ssh roci 'ls -la /var/run/roci/'
 ```
 
 **Fix:**
+
 ```bash
 # Restart all services in correct order
 bash /home/tijs/roci/scripts/restart.sh all
@@ -82,6 +88,7 @@ bash /home/tijs/roci/scripts/restart.sh all
 **Cause:** STATE_DIR environment variable not set or incorrect
 
 **Diagnosis:**
+
 ```bash
 # Check .env files
 ssh roci 'grep STATE_DIR ~/roci/roci-memory/.env'
@@ -92,6 +99,7 @@ ssh roci 'ls -la /home/tijs/roci/state/'
 ```
 
 **Fix:**
+
 ```bash
 # Add STATE_DIR to .env files
 ssh roci 'echo "STATE_DIR=/home/tijs/roci/state" >> ~/roci/roci-memory/.env'
@@ -108,6 +116,7 @@ bash /home/tijs/roci/scripts/restart.sh all
 **Cause:** Legacy path in Letta memory blocks or fallback code
 
 **Diagnosis:**
+
 ```bash
 # Check if legacy directory exists
 ssh roci 'test -d ~/.roci && echo "BUG: Legacy dir exists" || echo "OK"'
@@ -117,6 +126,7 @@ ssh roci 'ls -la ~/.roci/'
 ```
 
 **Fix:**
+
 ```bash
 # 1. Remove legacy directory
 ssh roci 'rm -rf ~/.roci'
@@ -141,6 +151,7 @@ bash /home/tijs/roci/scripts/restart.sh agent
 **Cause:** LiteLLM backend not running or model not configured
 
 **Diagnosis:**
+
 ```bash
 # Check LLM services
 ssh roci 'sudo systemctl status roci-llm roci-litellm --no-pager'
@@ -153,6 +164,7 @@ ssh roci 'cat ~/roci/roci-llm/litellm_config.yaml'
 ```
 
 **Fix:**
+
 ```bash
 # Restart LLM services (litellm first)
 ssh roci 'sudo systemctl restart roci-litellm'
@@ -169,6 +181,7 @@ bash /home/tijs/roci/skills/troubleshoot/scripts/test-llm.sh
 **Cause:** Missing or invalid API key in secrets file
 
 **Diagnosis:**
+
 ```bash
 # Check secrets file exists
 ssh roci 'sudo ls -la /etc/roci/secrets.conf'
@@ -178,6 +191,7 @@ ssh roci 'sudo grep ANTHROPIC_API_KEY /etc/roci/secrets.conf | wc -l'
 ```
 
 **Fix:**
+
 ```bash
 # Edit secrets file (requires root)
 ssh roci 'sudo nano /etc/roci/secrets.conf'
@@ -198,6 +212,7 @@ bash /home/tijs/roci/scripts/restart.sh all
 **Cause:** Timer not enabled, agent service down, or script permissions
 
 **Diagnosis:**
+
 ```bash
 # Check timer status
 bash /home/tijs/roci/skills/troubleshoot/scripts/check-timers.sh
@@ -213,6 +228,7 @@ ssh roci 'ls -la ~/roci/scripts/watch-tick.sh'
 ```
 
 **Fix:**
+
 ```bash
 # Enable and start timer
 ssh roci 'sudo systemctl enable roci-watch.timer'
@@ -232,6 +248,7 @@ bash /home/tijs/roci/scripts/watch-tick.sh
 **Cause:** Agent service not running or script failing silently
 
 **Diagnosis:**
+
 ```bash
 # Check agent service
 ssh roci 'sudo systemctl status roci-agent'
@@ -244,6 +261,7 @@ ssh roci '/home/tijs/roci/scripts/watch-tick.sh'
 ```
 
 **Fix:**
+
 ```bash
 # Restart agent service
 bash /home/tijs/roci/scripts/restart.sh agent
@@ -264,6 +282,7 @@ bash /home/tijs/roci/scripts/watch-tick.sh
 **Cause:** E2E encryption keys not synced or device not verified
 
 **Diagnosis:**
+
 ```bash
 # Check matrix service logs
 ssh roci 'sudo journalctl -u roci-matrix -n 50 --no-pager'
@@ -272,6 +291,7 @@ ssh roci 'sudo journalctl -u roci-matrix -n 50 --no-pager'
 ```
 
 **Fix:**
+
 ```bash
 # Restart matrix service (may trigger key sync)
 bash /home/tijs/roci/scripts/restart.sh matrix
@@ -287,6 +307,7 @@ bash /home/tijs/roci/scripts/restart.sh matrix
 **Cause:** Network issues or Matrix server down
 
 **Diagnosis:**
+
 ```bash
 # Check if envs.net is reachable
 ssh roci 'curl -s https://envs.net/_matrix/client/versions | head -5'
@@ -299,6 +320,7 @@ ssh roci 'sudo grep MATRIX_PASSWORD /etc/roci/secrets.conf | wc -l'
 ```
 
 **Fix:**
+
 ```bash
 # Restart matrix service
 bash /home/tijs/roci/scripts/restart.sh matrix
@@ -316,6 +338,7 @@ ssh roci 'sudo nano /etc/roci/secrets.conf'
 **Cause:** Service exceeding memory limits or system memory exhausted
 
 **Diagnosis:**
+
 ```bash
 # Check system memory
 ssh roci 'free -h'
@@ -328,6 +351,7 @@ ssh roci 'sudo journalctl -k | grep -i "killed process"'
 ```
 
 **Fix:**
+
 ```bash
 # Restart service to free memory
 bash /home/tijs/roci/scripts/restart.sh SERVICE
@@ -348,6 +372,7 @@ bash /home/tijs/roci/scripts/restart.sh SERVICE
 **Cause:** Service consuming too much CPU
 
 **Diagnosis:**
+
 ```bash
 # Check CPU usage
 ssh roci 'top -b -n 1 | grep -E "roci-(memory|agent|matrix)"'
@@ -357,6 +382,7 @@ ssh roci 'sudo systemctl status roci-SERVICE | grep CPU'
 ```
 
 **Fix:**
+
 ```bash
 # Restart service
 bash /home/tijs/roci/scripts/restart.sh SERVICE
@@ -379,6 +405,7 @@ bash /home/tijs/roci/scripts/restart.sh SERVICE
 **Cause:** SSH key not loaded or VPS permissions wrong
 
 **Diagnosis:**
+
 ```bash
 # Test SSH connection
 ssh roci 'echo "Connected"'
@@ -388,6 +415,7 @@ ssh roci 'ls -la ~/roci/'
 ```
 
 **Fix:**
+
 ```bash
 # Ensure SSH key is loaded
 ssh-add -l
@@ -406,6 +434,7 @@ ssh roci 'chmod -R u+w ~/roci/'
 **Cause:** Code has linting, type, or test errors
 
 **Diagnosis:**
+
 ```bash
 # Run checks locally
 cd roci-SERVICE
@@ -416,6 +445,7 @@ deno test --allow-all
 ```
 
 **Fix:**
+
 ```bash
 # Fix linting issues
 deno fmt
@@ -457,6 +487,7 @@ bash /home/tijs/roci/skills/troubleshoot/scripts/test-ipc.sh
 ## Prevention
 
 **Regular health checks:**
+
 ```bash
 # Daily quick check
 bash /home/tijs/roci/scripts/status.sh
@@ -468,6 +499,7 @@ bash /home/tijs/roci/skills/troubleshoot/scripts/test-llm.sh
 ```
 
 **Weekly backups:**
+
 ```bash
 bash /home/tijs/roci/scripts/backup.sh
 ```

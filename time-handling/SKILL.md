@@ -173,7 +173,7 @@ All scripts handle invalid input gracefully:
 - **`state/people/*.md`** - Read birthdates, calculate ages
 - **`state/commitments.md`** - Calculate days until deadlines
 - **`state/today.md`** - Add time-based context to tasks
-- **Journal** - Log significant date calculations via `log_journal`
+- **Journal** - Significant calculations logged automatically by reflection phase
 
 ## Timezone
 

@@ -167,18 +167,10 @@ cat > /home/tijs/roci/state/research/wellness/sleep-2025-12.md << 'EOF'
 EOF
 ```
 
-### Step 4: Log Research
+### Step 4: Completion
 
-Log to journal what you researched and why:
-
-```bash
-# Via log_journal tool (example of what to log)
-log_journal({
-  topics: ["research", "wellness", "sleep"],
-  user_stated: "Asked me to research sleep optimization for evening workers",
-  my_intent: "Researched sleep patterns for evening chronotypes. Created research/wellness/sleep-2025-12.md with Tijs-specific recommendations: embrace 1am-9am schedule, 90min wind-down, weekly audit. Added follow-up tasks to patterns."
-})
-```
+Research output is automatically journaled by the reflection phase after your response.
+The journal entry will capture topics, what the user asked, and what you discovered.
 
 ## Directory Organization
 
@@ -312,15 +304,15 @@ search_rag("topic keywords", limit=5)
 1. Establish context (check projects, today, patterns)
 2. Use search_rag or search_atproto for quick answers
 3. Synthesize answer (may not need full research doc)
-4. Log to journal if significant
+4. (Journal logged automatically by reflection phase)
 
 ### Deep Research (Substantial Investigation)
 
 1. Establish context comprehensively
 2. Conduct multi-source research
 3. Create research document in research/<topic>/
-4. Log to journal
-5. Generate follow-up tasks
+4. Generate follow-up tasks
+5. (Journal logged automatically by reflection phase)
 
 ### Ongoing Research (Multi-Session)
 

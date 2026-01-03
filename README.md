@@ -107,6 +107,35 @@ create_skill({
 });
 ```
 
+## Release Process
+
+This is one of Roci's public repositories (along with roci-matrix). Releases are
+automated via GitHub Actions.
+
+1. Update `CHANGELOG.md` with changes
+2. Commit changes
+3. Create git tag: `git tag v0.x.x`
+4. Push: `git push && git push --tags`
+
+GitHub Actions will automatically create a release with changelog content when
+the tag is pushed.
+
 ## License
 
 MIT
+
+## Related
+
+**Public repositories:**
+
+- [roci-skills](https://github.com/tijs/roci-skills) - Skills repository (this
+  repo)
+- [roci-matrix](https://github.com/tijs/roci-matrix) - Matrix service
+
+**Private repositories** (part of Roci architecture):
+
+- roci - Parent repository with deployment scripts
+- roci-agent - Agent service
+- roci-memory - Memory service
+- roci-rag - RAG service
+- roci-llm - LLM gateway service

@@ -258,6 +258,38 @@ Work in progress...
 EOF
 ```
 
+## Git Version Control
+
+State files are automatically version-controlled in a private Git repository.
+
+### Auto-Commit Behavior
+
+- Changes to state files are automatically committed after each agent response
+- Commits are pushed to GitHub asynchronously (non-blocking)
+- Commit messages describe what changed (e.g., "Update inbox", "Update
+  people/john")
+
+### Manual Git Operations
+
+You can use Bash to perform manual git operations if needed:
+
+```bash
+# View recent changes
+cd /home/tijs/roci/state && git log --oneline -10
+
+# View diff of uncommitted changes
+cd /home/tijs/roci/state && git status
+
+# Discard uncommitted changes (careful!)
+cd /home/tijs/roci/state && git checkout -- filename.md
+```
+
+### Important Notes About Git
+
+- **Database files are NOT in git** - they live in `/home/tijs/roci/data/`
+- Commit failures are logged but don't block responses
+- User can view history on GitHub at https://github.com/tijs/roci-state
+
 ## Important Notes
 
 - Always use absolute paths: `/home/tijs/roci/state/`

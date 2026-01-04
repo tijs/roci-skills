@@ -19,13 +19,21 @@ Use the beans CLI to manage development issues and track work on the Roci projec
 
 Beans directory: `~/roci/beans` (set via BEANS_DIR environment variable)
 
-Always run beans commands from the beans directory or use `--beans-path`:
+## IMPORTANT: Always Sync
+
+**Before ANY beans operation**, pull to get the latest changes:
 
 ```bash
-cd ~/roci/beans && beans <command>
-# OR
-beans --beans-path ~/roci/beans/.beans <command>
+cd ~/roci/beans && git pull --quiet
 ```
+
+**After ANY write operation** (create, update, delete), commit and push:
+
+```bash
+cd ~/roci/beans && git add . && git commit -m "Update beans" && git push
+```
+
+This ensures bidirectional sync with the developer's local machine.
 
 ## Common Operations
 
@@ -105,16 +113,6 @@ cd ~/roci/beans && beans query '{ beans(filter: { type: ["feature"] }) { id titl
 - Looking for work to do during watch rotation
 - Checking if an issue is already tracked
 - Understanding project priorities
-
-## After Making Changes
-
-Always commit and push bean changes so they sync:
-
-```bash
-cd ~/roci/beans && git add . && git commit -m "Update beans" && git push
-```
-
-This ensures changes are available locally when the developer pulls.
 
 ## Bean Structure
 

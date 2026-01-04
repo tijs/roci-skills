@@ -227,6 +227,37 @@ If no updates needed:
 - Output: `[SKIP_REFLECTION]`
 - No tools called, save tokens
 
+## Conversation Summaries
+
+For multi-turn conversations, consider logging a summary when:
+
+### When to Log Summary
+
+- User corrected you on something important (timezone, name, preference)
+- Intent changed across messages ("Actually, forget that, let's do X instead")
+- Complex context would be lost when conversation ends
+- People, projects, or topics discussed that may be referenced later
+- Pending items that weren't fully resolved
+
+### Journal Entry Format
+
+Use `journal_log` with topic `"conversation_summary"`:
+
+```json
+{
+  "topics": ["conversation_summary", "person:alice", "project:roci"],
+  "user_stated": "Wanted to schedule meeting with Alice. Corrected timezone from PST to CET.",
+  "my_intent": "Created calendar event. Updated Alice's person file with timezone. Still need to confirm meeting room."
+}
+```
+
+### When NOT to Log Summary
+
+- Single-turn Q&A (answer given, no follow-up)
+- Casual conversation with no lasting context
+- All relevant info already captured in state files
+- Simple task completion with nothing pending
+
 ## Best Practices
 
 - **Be selective:** Not everything needs capturing

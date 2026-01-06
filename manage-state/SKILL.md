@@ -1,73 +1,114 @@
 ---
 name: manage-state
-description: Comprehensive guide to Roci's state file system. Explains core task files (auto-loaded) vs reference files (on-demand). Use when user asks about state, mentions tasks, or references tracked topics like projects, books, family, etc.
+description: Guide to Roci's state file system. Explains core task files (always loaded) vs reference files (on-demand). Use when user asks about state, tasks, or wants to track information.
 ---
 
 # Manage State Files
 
-Guidance for working with Roci's state files (inbox, today, commitments,
-patterns).
+Guide for working with Roci's state files.
 
-## State Directory
+## State Architecture
 
-**All state files live at:** `/home/tijs/roci/state/`
+**State directory:** `/home/tijs/roci/state/`
 
-Never use relative paths - always use full absolute paths.
+Always use absolute paths when reading/writing state files.
 
-## State Files
+### Two Types of State Files
+
+1. **Core files** (4 files, always loaded in context)
+   - `inbox.md`, `today.md`, `commitments.md`, `patterns.md`
+   - These drive the GTD-style task workflow
+   - Updated frequently, kept minimal
+
+2. **Reference files** (on-demand, not auto-loaded)
+   - Any other `.md` file in the state directory
+   - Read when relevant to conversation
+   - For persistent knowledge tracking
+
+### Structured Directories
+
+- `people/` - One file per person (see `people` skill)
+- `research/` - Deep research outputs by topic (see `research` skill)
+- `drafts/` - Work-in-progress documents
+
+## File Frontmatter Convention
+
+All state files have YAML frontmatter with a `description` field:
+
+```yaml
+---
+description: Short explanation of what this file is for
+---
+```
+
+This allows dynamic discovery - the agent learns what each file is for by
+reading its frontmatter.
+
+## Discovering Available State
+
+**Use bash to discover what state files exist:**
+
+```bash
+# List all state files
+ls -1 /home/tijs/roci/state/*.md
+
+# See what a file is for (read frontmatter)
+head -5 /home/tijs/roci/state/filename.md
+
+# List subdirectories
+ls -d /home/tijs/roci/state/*/
+
+# List people files
+ls -1 /home/tijs/roci/state/people/*.md
+
+# Find research outputs
+find /home/tijs/roci/state/research -name "*.md" -type f
+```
+
+**Before assuming a file exists, check first:**
+
+```bash
+test -f /home/tijs/roci/state/filename.md && echo "exists" || echo "not found"
+```
+
+## Core Files (Always Loaded)
+
+These 4 files are hardcoded and stable:
 
 ### inbox.md
 
-**Purpose:** Temporary holding area for tasks mentioned by user **When to
-write:** User mentions a task, reminder, or something to remember **Format:**
-Simple bullet points, no overthinking **Example:**
+**Purpose:** Temporary holding area for tasks mentioned by user
 
 ```bash
-echo "- Call mom about birthday dinner" >> /home/tijs/roci/state/inbox.md
+# Append task
+echo "- Call mom about dinner" >> /home/tijs/roci/state/inbox.md
 ```
 
 ### today.md
 
-**Purpose:** Time-sensitive items for today **When to write:** During watch
-rotation, move urgent items from inbox **Format:** Prioritized list with context
-**Example:**
+**Purpose:** Time-sensitive items for today
 
 ```bash
-cat > /home/tijs/roci/state/today.md << 'EOF'
-# Today
-
-## High Priority
-- Finish PR review for James (#234) - blocking deployment
-
-## Scheduled
-- 14:00 Team standup
-EOF
+# View today's tasks
+cat /home/tijs/roci/state/today.md
 ```
 
 ### commitments.md
 
-**Purpose:** Deadlines and dated commitments **When to write:** User mentions a
-deadline or commitment with a date **Format:** Date-stamped items **Example:**
+**Purpose:** Deadlines and dated commitments
 
 ```bash
-cat >> /home/tijs/roci/state/commitments.md << 'EOF'
-- [ ] Q1 Planning deck - due Jan 15
-- [ ] Amsterdam trip flights - book by Dec 31
-EOF
+# Add commitment with date
+echo "- [ ] Q1 Planning deck - due Jan 15" >> /home/tijs/roci/state/commitments.md
 ```
 
 ### patterns.md
 
-**Purpose:** Recurring patterns and task backlog (no deadline) **When to
-write:** During watch rotation, move non-urgent items or patterns from inbox
-**Format:** Categorized if helpful **Example:**
+**Purpose:** Recurring patterns and task backlog (no deadline)
 
 ```bash
-cat >> /home/tijs/roci/state/patterns.md << 'EOF'
-## Roci Features
-- Implement calendar sync for external calendars
-- Add support for recurring tasks
-EOF
+# Add to backlog
+echo "- Add calendar sync feature" >> /home/tijs/roci/state/patterns.md
 ```
 
 ## Common Operations
@@ -88,27 +129,14 @@ echo "- New task" >> /home/tijs/roci/state/today.md
 
 ```bash
 cat > /home/tijs/roci/state/inbox.md << 'EOF'
+---
+description: Temporary holding area for tasks and items to triage
+---
+
 # Inbox
 
 - Task 1
 - Task 2
-EOF
-```
-
-### Move item between files
-
-```bash
-# Read inbox
-INBOX=$(cat /home/tijs/roci/state/inbox.md)
-
-# Extract item and add to today.md
-echo "- Item from inbox" >> /home/tijs/roci/state/today.md
-
-# Remove from inbox (rewrite without that line)
-cat > /home/tijs/roci/state/inbox.md << 'EOF'
-# Inbox
-
-(remaining items)
 EOF
 ```
 
@@ -125,210 +153,80 @@ Goal: Empty inbox after each watch rotation.
 
 ## Reference Files
 
-Beyond core task files, you have reference files for persistent knowledge
-tracking.
+Reference files store persistent knowledge that doesn't change daily.
 
-**Reference files are NOT loaded in context automatically** - you read them
-on-demand using the Read tool.
+**When to read reference files:**
 
-### When to Use Reference Files
+- User explicitly asks ("what's in my reading list?")
+- Context suggests relevance (discussing books → check for books file)
+- Establishing context for a task
 
-**Read reference files when:**
+**When to update reference files:**
 
-- User explicitly mentions a topic ("what's in my reading list?", "check
-  projects")
-- Context suggests relevance (discussing books → read `books.md`)
-- Establishing context for research
+- User provides information worth persisting
+- User asks to track something new
 
-**Update reference files when:**
+**To work with reference files:**
 
-- User provides information that belongs in a reference file
-- You learn something worth persisting
-- User asks you to track something ("keep a reading list")
+1. First discover what exists: `ls -1 /home/tijs/roci/state/*.md`
+2. Read frontmatter to understand purpose: `head -5 /home/tijs/roci/state/file.md`
+3. Read, update, or create as needed
 
-### Reference File Paths
-
-All paths use `/home/tijs/roci/state/` prefix:
-
-- **Projects:** `/home/tijs/roci/state/projects.md`
-- **Family:** `/home/tijs/roci/state/family.md`
-- **Books:** `/home/tijs/roci/state/books.md`
-- **Music:** `/home/tijs/roci/state/music.md`
-- **Podcasts:** `/home/tijs/roci/state/podcasts.md`
-- **Travel:** `/home/tijs/roci/state/travel.md`
-
-### Example Operations
-
-**Read reference file:**
+**Creating a new reference file:**
 
 ```bash
-cat /home/tijs/roci/state/books.md
-```
+cat > /home/tijs/roci/state/newfile.md << 'EOF'
+---
+description: What this file tracks
+---
 
-**Update reference file:**
+# Title
 
-```bash
-cat > /home/tijs/roci/state/books.md << 'EOF'
-# Books
-
-## Currently Reading
-- The Expanse series - Book 3
-
-## Reading List
-- Project Hail Mary by Andy Weir
-
-## Completed (2025)
-- 2025-12-15: Neuromancer - Excellent
+Content here...
 EOF
 ```
 
-**Append to reference file:**
+## Searching State Files
 
 ```bash
-cat >> /home/tijs/roci/state/books.md << 'EOF'
+# Search for keyword across all state
+grep -r "keyword" /home/tijs/roci/state/
 
-## Reading List
-- New book just added
-EOF
-```
+# Search people files
+grep -r "topic" /home/tijs/roci/state/people/
 
-## Structured Directories
+# Search with context
+grep -r -C2 "keyword" /home/tijs/roci/state/
 
-### People Directory
+# Case-insensitive search
+grep -ri "keyword" /home/tijs/roci/state/
 
-Track people in Tijs's life. One file per person.
-
-**See the `people` skill** for detailed workflow (file structure, when to
-update, etc.)
-
-**List all people:**
-
-```bash
-ls -1 /home/tijs/roci/state/people/*.md
-```
-
-**Read person file:**
-
-```bash
-cat /home/tijs/roci/state/people/john-smith.md
-```
-
-**Check if person file exists:**
-
-```bash
-test -f /home/tijs/roci/state/people/john-smith.md && echo "exists" || echo "not found"
-```
-
-### Research Directory
-
-Deep research outputs organized by topic (wellness/, tech/, finance/,
-productivity/).
-
-**See the `research` skill** for detailed research workflow.
-
-**List research outputs:**
-
-```bash
-find /home/tijs/roci/state/research -name "*.md" -type f
-```
-
-**Read research file:**
-
-```bash
-cat /home/tijs/roci/state/research/wellness/sleep-2025-12.md
-```
-
-### Drafts Directory
-
-Work-in-progress documents and proposals.
-
-**List drafts:**
-
-```bash
-ls -1 /home/tijs/roci/state/drafts/
-```
-
-**Create draft:**
-
-```bash
-cat > /home/tijs/roci/state/drafts/DRAFT-roci-v3.md << 'EOF'
-# Roci v3 Architecture (DRAFT)
-
-Work in progress...
-EOF
+# Find recently modified files
+find /home/tijs/roci/state/ -name "*.md" -mtime -7
 ```
 
 ## Git Version Control
 
-State files are automatically version-controlled in a private Git repository.
+State files are automatically version-controlled.
 
-### Auto-Commit Behavior
+- Changes are auto-committed after each agent response
+- Commits are pushed to GitHub asynchronously
+- Database files live in `/home/tijs/roci/data/` (not in git)
 
-- Changes to state files are automatically committed after each agent response
-- Commits are pushed to GitHub asynchronously (non-blocking)
-- Commit messages describe what changed (e.g., "Update inbox", "Update
-  people/john")
-
-### Manual Git Operations
-
-You can use Bash to perform manual git operations if needed:
+**Manual git operations:**
 
 ```bash
 # View recent changes
 cd /home/tijs/roci/state && git log --oneline -10
 
-# View diff of uncommitted changes
+# View uncommitted changes
 cd /home/tijs/roci/state && git status
-
-# Discard uncommitted changes (careful!)
-cd /home/tijs/roci/state && git checkout -- filename.md
 ```
-
-### Important Notes About Git
-
-- **Database files are NOT in git** - they live in `/home/tijs/roci/data/`
-- Commit failures are logged but don't block responses
-- User can view history on GitHub at https://github.com/tijs/roci-state
 
 ## Important Notes
 
 - Always use absolute paths: `/home/tijs/roci/state/`
 - State files are plain markdown - keep them readable
-- Don't overthink formatting - simple bullet points work fine
-- **Core files** (inbox, today, commitments, patterns) are loaded in EVERY
-  message
-- **Reference files** are read on-demand (not auto-loaded) to prevent context
-  bloat
-- You write to ALL files using Read/Write/Bash tools
+- Core files are always in context; reference files are read on-demand
 - Use `people` skill for people tracking, `research` skill for deep research
-
-## Searching State Files
-
-Use bash tools to quickly search across state files:
-
-**Search for keyword across all state files:**
-```bash
-grep -r "keyword" /home/tijs/roci/state/
-```
-
-**Search people files:**
-```bash
-grep -r "accessibility" /home/tijs/roci/state/people/
-```
-
-**Find files modified recently:**
-```bash
-find /home/tijs/roci/state/ -name "*.md" -mtime -7
-```
-
-**Search with context (show 2 lines before/after):**
-```bash
-grep -r -C2 "Swift 6" /home/tijs/roci/state/people/
-```
-
-**Search case-insensitive:**
-```bash
-grep -ri "concurrency" /home/tijs/roci/state/people/
-```
-
-Use these before manually reading files to locate relevant context quickly.
+- Discover available files with bash before assuming they exist

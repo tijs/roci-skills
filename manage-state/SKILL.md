@@ -301,3 +301,34 @@ cd /home/tijs/roci/state && git checkout -- filename.md
   bloat
 - You write to ALL files using Read/Write/Bash tools
 - Use `people` skill for people tracking, `research` skill for deep research
+
+## Searching State Files
+
+Use bash tools to quickly search across state files:
+
+**Search for keyword across all state files:**
+```bash
+grep -r "keyword" /home/tijs/roci/state/
+```
+
+**Search people files:**
+```bash
+grep -r "accessibility" /home/tijs/roci/state/people/
+```
+
+**Find files modified recently:**
+```bash
+find /home/tijs/roci/state/ -name "*.md" -mtime -7
+```
+
+**Search with context (show 2 lines before/after):**
+```bash
+grep -r -C2 "Swift 6" /home/tijs/roci/state/people/
+```
+
+**Search case-insensitive:**
+```bash
+grep -ri "concurrency" /home/tijs/roci/state/people/
+```
+
+Use these before manually reading files to locate relevant context quickly.

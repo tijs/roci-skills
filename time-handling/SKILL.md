@@ -3,12 +3,11 @@ name: time-handling
 description: Calculate age, date duration, date arithmetic, day of week, and next occurrence of a specific day. Use for date calculations, scheduling, and calendar operations.
 allowed-tools: bash read write
 ---
+
 This skill provides timezone-aware date calculations for age, duration, date
 arithmetic, day-of-week lookups, and finding next occurrences of specific days.
 All operations use the Europe/Amsterdam timezone and ISO 8601 date format
 (YYYY-MM-DD).
-timezone and ISO 8601 date format (YYYY-MM-DD).
-This skill provides timezone-aware date calculations for age, duration, date arithmetic, day-of-week lookups, and finding next occurrences of specific days. All operations use the Europe/Amsterdam timezone and ISO 8601 date format (YYYY-MM-DD).
 
 ## Operations
 
@@ -102,19 +101,23 @@ bash /home/tijs/roci/skills/time-handling/scripts/next-day.sh DAY [--from=YYYY-M
 ```
 
 **Examples:**
+
 - `next-day.sh Monday` → "2026-01-05" (next Monday from today)
 - `next-day.sh Friday --from=2026-01-02` → "2026-01-09" (next Friday from Jan 2)
 - `next-day.sh Tuesday --format=human` → "Tuesday, January 06, 2026"
 
-**Days:** Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday (case-insensitive, abbreviations supported)
+**Days:** Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+(case-insensitive, abbreviations supported)
 
 **When to use:**
+
 - Creating recurring events ("every Monday at 19:00")
 - Scheduling meetings ("next team sync on Friday")
 - Calendar operations requiring specific days
 - Validating that calculated dates match intended day-of-week
 
-**Important:** If --from date is already the target day, returns NEXT week's occurrence (7 days later).
+**Important:** If --from date is already the target day, returns NEXT week's
+occurrence (7 days later).
 
 ## Common Use Cases
 
@@ -173,7 +176,8 @@ All scripts handle invalid input gracefully:
 - **`state/people/*.md`** - Read birthdates, calculate ages
 - **`state/commitments.md`** - Calculate days until deadlines
 - **`state/today.md`** - Add time-based context to tasks
-- **Journal** - Significant calculations logged automatically by reflection phase
+- **Journal** - Significant calculations logged automatically by reflection
+  phase
 
 ## Timezone
 

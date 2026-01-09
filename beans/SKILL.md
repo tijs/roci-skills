@@ -13,7 +13,8 @@ triggers:
 
 # Beans Skill
 
-Use the beans CLI to manage development issues and track work on the Roci project.
+Use the beans CLI to manage development issues and track work on the Roci
+project.
 
 ## Location
 
@@ -64,6 +65,7 @@ cd ~/roci/beans && beans create "Title" -t <type> -d "Description" -s todo
 Types: `bug`, `feature`, `task`, `epic`, `milestone`
 
 Example:
+
 ```bash
 cd ~/roci/beans && beans create "Calendar sync fails on recurring events" -t bug -d "The CalDAV sync misses events with RRULE patterns that span multiple months" -s todo -p high
 ```
@@ -71,11 +73,13 @@ cd ~/roci/beans && beans create "Calendar sync fails on recurring events" -t bug
 ### Update bean status
 
 When starting work:
+
 ```bash
 cd ~/roci/beans && beans update <id> --status in-progress
 ```
 
 When completing:
+
 ```bash
 cd ~/roci/beans && beans update <id> --status completed
 ```
@@ -99,17 +103,20 @@ cd ~/roci/beans && beans query '{ beans(filter: { type: ["feature"] }) { id titl
 ## When to Use Beans
 
 **Create a bean when:**
+
 - You discover a bug while working on something else
 - You have an idea for improvement that's not the current task
 - User reports an issue worth tracking
 - You identify technical debt
 
 **Update a bean when:**
+
 - Starting work on a tracked issue
 - Completing work on a tracked issue
 - Adding notes or findings to an issue
 
 **Query beans when:**
+
 - Looking for work to do during watch rotation
 - Checking if an issue is already tracked
 - Understanding project priorities
@@ -151,6 +158,9 @@ For complex queries, use the GraphQL interface:
 cd ~/roci/beans && beans query '<graphql>'
 ```
 
-Useful fields: `id`, `title`, `status`, `type`, `priority`, `body`, `parent { title }`, `children { id title }`, `blockedBy { title }`, `blocking { title }`
+Useful fields: `id`, `title`, `status`, `type`, `priority`, `body`,
+`parent { title }`, `children { id title }`, `blockedBy { title }`,
+`blocking { title }`
 
-Filter options: `search`, `status`, `excludeStatus`, `type`, `priority`, `isBlocked`, `hasParent`, `noParent`
+Filter options: `search`, `status`, `excludeStatus`, `type`, `priority`,
+`isBlocked`, `hasParent`, `noParent`

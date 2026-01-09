@@ -18,8 +18,8 @@ logged interactions - what was discussed, what actions were taken, and when.
 
 Each line is a JSON object with 4 fields:
 
-| Field         | Type     | Description                                |
-| ------------- | -------- | ------------------------------------------ |
+| Field         | Type     | Description                                           |
+| ------------- | -------- | ----------------------------------------------------- |
 | `t`           | string   | ISO 8601 timestamp (e.g., `2025-12-28T05:05:22.943Z`) |
 | `topics`      | string[] | Tags for filtering (e.g., `["deadline", "work"]`)     |
 | `user_stated` | string   | What Tijs said (verbatim or paraphrased)              |
@@ -108,8 +108,8 @@ jq -c 'select(.user_stated != "") | select(.my_intent | contains("commitments.md
 
 ## Time-Based Queries
 
-Note: The `fromdateiso8601` function doesn't support millisecond timestamps.
-Use the `startswith` approach above for date filtering - it's simpler and more
+Note: The `fromdateiso8601` function doesn't support millisecond timestamps. Use
+the `startswith` approach above for date filtering - it's simpler and more
 reliable.
 
 If you need relative time (e.g., "last 24 hours"), strip milliseconds first:
@@ -125,21 +125,25 @@ jq -c 'select((.t | split(".")[0] + "Z" | fromdateiso8601) > (now - 604800))' /h
 ## Common Use Cases
 
 **"What did we discuss about X?"**
+
 ```bash
 jq -c 'select(.user_stated | test("X"; "i"))' /home/tijs/roci/state/logs/journal.jsonl
 ```
 
 **"When did I last mention Y?"**
+
 ```bash
 jq -c 'select(.user_stated | test("Y"; "i"))' /home/tijs/roci/state/logs/journal.jsonl | tail -1
 ```
 
 **"What actions did I take on topic Z?"**
+
 ```bash
 jq -c 'select(.topics | contains(["Z"]))' /home/tijs/roci/state/logs/journal.jsonl | jq '.my_intent'
 ```
 
 **"Show all entries from this week"**
+
 ```bash
 jq -c 'select(.t | startswith("2026-01"))' /home/tijs/roci/state/logs/journal.jsonl
 ```

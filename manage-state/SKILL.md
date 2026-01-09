@@ -169,7 +169,8 @@ Reference files store persistent knowledge that doesn't change daily.
 **To work with reference files:**
 
 1. First discover what exists: `ls -1 /home/tijs/roci/state/*.md`
-2. Read frontmatter to understand purpose: `head -5 /home/tijs/roci/state/file.md`
+2. Read frontmatter to understand purpose:
+   `head -5 /home/tijs/roci/state/file.md`
 3. Read, update, or create as needed
 
 **Creating a new reference file:**

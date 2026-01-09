@@ -169,8 +169,9 @@ EOF
 
 ### Step 4: Completion
 
-Research output is automatically journaled by the reflection phase after your response.
-The journal entry will capture topics, what the user asked, and what you discovered.
+Research output is automatically journaled by the reflection phase after your
+response. The journal entry will capture topics, what the user asked, and what
+you discovered.
 
 ## Directory Organization
 

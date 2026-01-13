@@ -20,6 +20,19 @@ project.
 
 Beans directory: `~/roci/beans` (set via BEANS_DIR environment variable)
 
+## CRITICAL: Single Beans Directory Only
+
+**Never create beans repos in other locations.** All beans live in the central
+directory at `~/roci/beans`. Do NOT:
+
+- Run `beans init` in other directories
+- Create `.beans.yml` files elsewhere
+- Create `.beans/` directories in service repos (roci-agent, roci-memory, etc.)
+
+If you need to track work, **always `cd ~/roci/beans` first**. The beans CLI
+will create a local repo if you run commands elsewhere - this is wrong and
+causes sync issues.
+
 ## IMPORTANT: Always Sync
 
 **Before ANY beans operation**, pull to get the latest changes:

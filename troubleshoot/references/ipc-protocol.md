@@ -342,8 +342,8 @@ User message from Matrix (sent by roci-matrix).
 {
   "type": "user_message",
   "message_id": "event_id",
-  "user_id": "@tijs:envs.net",
-  "room_id": "!room:envs.net",
+  "user_id": "@tijs:hamster.farm",
+  "room_id": "!room:hamster.farm",
   "content": "Message text",
   "timestamp": "2025-12-29T14:00:00Z"
 }
@@ -376,8 +376,8 @@ Proactive message from agent (e.g., watch rotation update).
 ```json
 {
   "type": "proactive_message",
-  "user_id": "@tijs:envs.net",
-  "room_id": "!room:envs.net",
+  "user_id": "@tijs:hamster.farm",
+  "room_id": "!room:hamster.farm",
   "content": "Proactive message text",
   "trigger": "watch_rotation",
   "timestamp": "2025-12-29T14:30:00Z"

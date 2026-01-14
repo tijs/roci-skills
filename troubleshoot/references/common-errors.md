@@ -309,8 +309,8 @@ bash /home/tijs/roci/scripts/restart.sh matrix
 **Diagnosis:**
 
 ```bash
-# Check if envs.net is reachable
-ssh roci 'curl -s https://envs.net/_matrix/client/versions | head -5'
+# Check if hamster.farm is reachable
+ssh roci 'curl -s https://hamster.farm/_matrix/client/versions | head -5'
 
 # Check matrix service logs
 ssh roci 'sudo journalctl -u roci-matrix -n 50 --no-pager'
